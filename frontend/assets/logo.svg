@@ -1,0 +1,7 @@
+<svg id="logo" width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M60 120C93.1371 120 120 93.1371 120 60C120 26.8629 93.1371 0 60 0C26.8629 0 0 26.8629 0 60C0 93.1371 26.8629 120 60 120Z" fill="#2563EB"/>
+    <path d="M60 30L75 45H45L60 30Z" fill="#EFF6FF"/>
+    <path d="M60 90L45 75H75L60 90Z" fill="#EFF6FF"/>
+    <path d="M30 60L45 45V75L30 60Z" fill="#EFF6FF"/>
+    <path d="M90 60L75 75V45L90 60Z" fill="#EFF6FF"/>
+</svg>

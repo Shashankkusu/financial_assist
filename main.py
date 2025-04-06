@@ -8,12 +8,17 @@ import google.generativeai as genai
 import yfinance as yf
 import pytz
 import re
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = Flask(__name__, static_folder="frontend", static_url_path="")
 CORS(app)
 
-# Configure Google Gemini API Key
-genai.configure(api_key="AIzaSyBfYBTLY9P0ubbiOMIqhtctYYd1kawWlXY")
+# Configure Google Gemini API Key securely from .env
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
 
 # System prompt for chatbot
 sys_prompt = """You are a helpful AI assistant designed to answer questions about finance, stock trading, and investment strategies. 

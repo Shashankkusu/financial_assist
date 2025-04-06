@@ -101,8 +101,6 @@ finance-chatbot-app/
 
  Real-time news scraping (via NewsAPI)
 
-## 📃 License
-MIT License © 2025 [k sai shashank]
 
 ## 🤝 Contributions
 Feel free to open issues or PRs! Let’s build a smarter financial assistant together 💸

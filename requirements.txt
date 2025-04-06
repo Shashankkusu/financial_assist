@@ -1,0 +1,8 @@
+
+Flask==2.3.2
+Flask-Cors==3.0.10
+numpy==1.24.3
+pandas==2.0.3
+google-generativeai==0.3.2
+yfinance==0.2.36
+pytz==2023.3

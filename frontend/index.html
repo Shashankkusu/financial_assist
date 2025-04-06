@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumStocks | AI-Powered Market Analysis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="video-background">
+        <video autoplay muted loop id="bgVideo">
+            <source src="assets/stock-bg.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+    <div id="wave-animation-container" style="width: 100%; height: 80px;"></div>
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <img src="assets/logo.svg" alt="QuantumStocks" class="logo">
+                <h1>Quantum<span>Stocks</span></h1>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" id="stockTicker" placeholder="Enter stock ticker (e.g. AAPL)" autocomplete="off">
+                        <button id="searchBtn">
+                            <i class="fas fa-search"></i> Analyze
+                        </button>
+                    </div>
+                    <div id="errorContainer" class="error-container"></div>
+                    <div class="search-suggestions">
+                        <span>Try:</span>
+                        <button class="suggestion-btn" data-ticker="AAPL">AAPL</button>
+                        <button class="suggestion-btn" data-ticker="MSFT">MSFT</button>
+                        <button class="suggestion-btn" data-ticker="TSLA">TSLA</button>
+                        <button class="suggestion-btn" data-ticker="AMZN">AMZN</button>
+                        <button class="suggestion-btn" data-ticker="GOOG">GOOG</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stock Dashboard -->
+            <section class="dashboard-section">
+                <div class="dashboard-grid">
+                    <!-- Stock Overview Card -->
+                    <div class="card overview-card animate-fade-in">
+                        <div class="card-header">
+                            <h2>Stock Overview</h2>
+                            <div class="card-actions">
+                                <button class="refresh-btn" id="refreshOverview"><i class="fas fa-sync-alt"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="stock-basic-info">
+                                <div class="stock-symbol" id="stockSymbol">--</div>
+                                <div class="stock-price" id="stockPrice">$0.00</div>
+                                <div class="stock-change" id="stockChange">
+                                    <span class="change-amount">+0.00</span>
+                                    <span class="change-percent">(+0.00%)</span>
+                                </div>
+                            </div>
+                            <div class="stock-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Open</span>
+                                    <span class="detail-value" id="stockOpen">--</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">High</span>
+                                    <span class="detail-value" id="stockHigh">--</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Low</span>
+                                    <span class="detail-value" id="stockLow">--</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Volume</span>
+                                    <span class="detail-value" id="stockVolume">--</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="last-updated" id="lastUpdated">Last updated: --</div>
+                        </div>
+                    </div>
+
+                    <!-- Risk Assessment Card -->
+                    <div class="card risk-card animate-slide-up">
+                        <div class="card-header">
+                            <h2>Risk Assessment</h2>
+                            <div class="risk-level" id="riskLevel">--</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="risk-meter">
+                                <div class="meter-bar">
+                                    <div class="meter-fill" id="riskMeterFill"></div>
+                                </div>
+                                <div class="meter-labels">
+                                    <span>Low</span>
+                                    <span>Medium</span>
+                                    <span>High</span>
+                                </div>
+                            </div>
+                            <div class="risk-description" id="riskDescription">
+                                Enter a stock symbol to assess risk level and volatility.
+                            </div>
+                            <div class="risk-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Volatility</span>
+                                    <span class="stat-value" id="volatilityValue">--</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">30-Day Range</span>
+                                    <span class="stat-value" id="priceRange">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Prediction Card -->
+                    <div class="card prediction-card animate-slide-up">
+                        <div class="card-header">
+                            <h2>AI Prediction</h2>
+                            <div class="prediction-confidence">
+                                <span>Confidence:</span>
+                                <span class="confidence-value" id="confidenceValue">--%</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="prediction-trend" id="predictionTrend">
+                                <div class="trend-icon">
+                                    <i class="fas fa-arrow-up trend-up"></i>
+                                    <i class="fas fa-arrow-down trend-down"></i>
+                                    <i class="fas fa-equals trend-neutral"></i>
+                                </div>
+                                <div class="trend-text">Enter a stock symbol for prediction</div>
+                            </div>
+                            <div class="prediction-details">
+                                <div class="prediction-item">
+                                    <span class="prediction-label">Current Price</span>
+                                    <span class="prediction-value" id="currentPrice">--</span>
+                                </div>
+                                <div class="prediction-item">
+                                    <span class="prediction-label">Predicted Price</span>
+                                    <span class="prediction-value" id="predictedPrice">--</span>
+                                </div>
+                                <div class="prediction-item">
+                                    <span class="prediction-label">Prediction Date</span>
+                                    <span class="prediction-value" id="predictionDate">--</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="prediction-model">Using Random Forest & Moving Average models</div>
+                        </div>
+                    </div>
+
+                    <!-- Chart Card -->
+                    <div class="card chart-card animate-fade-in">
+                        <div class="card-header">
+                            <h2>Price Movement</h2>
+                            <div class="chart-options">
+                                <button class="chart-period active" data-period="1d">1D</button>
+                                <button class="chart-period" data-period="7d">7D</button>
+                                <button class="chart-period" data-period="30d">30D</button>
+                                <button class="chart-period" data-period="3mo">3M</button>
+                                <button class="chart-period" data-period="1y">1Y</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="priceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Chatbot Card -->
+                    <div class="card chatbot-card animate-slide-up">
+                        <div class="card-header">
+                            <h2>Quantum AI Assistant</h2>
+                            <div class="chatbot-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chat-messages" id="chatMessages">
+                                <div class="message bot-message">
+                                    <div class="message-content">
+                                        Hello! I'm your AI stock analyst. Ask me anything about the stock market, investments, or financial strategies.
+                                        <div class="message-timestamp">Just now</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-input">
+                                <input type="text" id="chatInput" placeholder="Ask about stocks or investments..." data-ticker="">
+                                <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="chat-disclaimer">AI responses may not always be accurate. Always do your own research.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="assets/logo.svg" alt="QuantumStocks">
+                    <span>QuantumStocks</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Terms</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">API</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2023 QuantumStocks. All rights reserved. Data provided by Yahoo Finance.
+            </div>
+        </footer>
+    </div>
+
+    <!-- Loading Animation -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div id="loadingAnimation" style="width: 150px; height: 150px;"></div>
+            <div class="loading-text">Analyzing market data...</div>
+        </div>
+    </div>
+
+    <!-- Lottie Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Date Formatting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+</html>
